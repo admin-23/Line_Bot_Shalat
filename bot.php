@@ -82,13 +82,6 @@ function cuaca($keyword) {
 # require_once('./src/function/search-2.php');
 # require_once('./src/function/hard.php');
 
-#-------------------------[Function]-------------------------#
-
-# require_once('./src/function/search-1.php');
-# require_once('./src/function/download.php');
-# require_once('./src/function/random.php');
-# require_once('./src/function/search-2.php');
-# require_once('./src/function/hard.php');
 
 //show menu, saat join dan command /menu
 if ($type == 'join' || $command == '/menu') {
