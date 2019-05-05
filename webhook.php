@@ -593,61 +593,144 @@ def clientBot(op):
         								settings["protectInvite"]["on"] = False
         								settings["protectInvite"]["list"].remove(to)
         							client.sendMessage(to, "Protect Invite Offline")
-        				elif cmd == "protectcancel on" and sender == settings["staff"]["list"] and sender == Admin:
-        					if to in settings["protectCancel"]["list"]:
-        						client.sendMessage(to, "Protect Cancel Is Online")
-        					else:
-        						settings["protectCancel"]["on"] = True
-        						settings["protectCancel"]["list"].append(to)
-        						client.sendMessage(to, "Protect Cancel Online")
-        				elif cmd == "protectcancel off" and sender == settings["staff"]["list"] and sender == Admin:
-        					if to in settings["protectCancel"]["list"]:
-        						client.sendMessage(to, "Protect Cancel Is Offline")
-        					else:
-        						settings["protectCancel"]["on"] = False
-        						settings["protectCancel"]["list"].remove(to)
-        						client.sendMessage(to, "Protect Cancel Offline")
-        				elif cmd == "protectqr on" and sender == settings["staff"]["list"] and sender == Admin:
-        					if to in settings["protectqr"]["list"]:
-        						client.sendMessage(to, "Protect Qr Is Online")
-        					else:
-        						settings["protectQr"]["on"] = True
-        						settings["protectQr"]["list"].append(to)
-        						client.sendMessage(to, "Protect Qr Online")
-        				elif cmd == "protectqr off" and sender == settings["staff"]["list"] and sender == Admin:
-        					if to in settings["protectQr"]["list"]:
-        						client.sendMessage(to, "Protect Qr Is Offline")
-        					else:
-        						settings["protectQr"]["on"] = False
-        						settings["protectQr"]["list"].remove(to)
-        						client.sendMessage(to, "Protect Qr Offline")
-        				elif cmd == "bot join" and sender == settings["staff"]["list"] and sender == Admin:
-        					g = client.getGroup(to)
-        					g.preventedJoinByTicket = False
-        					client.updateGroup(g)
-        					Ticket = client.reissueGroupTicket(to)
-        					for join in dolphinJoin:
-        						if join in g.members:
-        							client.sendMessage(to, "Your Bot Already Join")
-        						else:
-        							join.acceptGroupInvitationByTicket(to, Ticket)
-        							join.sendMessage(to, "Ready Protect Group")
-        							g.preventedJoinByTicket = True
-        							client.updateGroup(g)
-        				elif cmd == "bot bye" and sender == settings["staff"]["list"] and sender == Admin:
-        					g = client.getGroup(to)
-        					for bye in dolphinJoin:
-        						if bye in g.members:
-        							client.sendMessage(to, "Your Bot Already Leave")
-        						else:
-        							bye.sendMessage(to, "Protect Is Finish")
-        							bye.leaveGroup(to)
-        				elif cmd == "clear blacklist" and sender == settings["staff"]["list"] and sender == Admin:
-        					if to in settings["blacklist"]["list"]:
-        						client.sendMessage(to, "Nothing Blacklist")
-        					else:
-        						settings["blacklist"]["list"] = []
-        						client.sendMessage(to, "Succes Clear All Blacklist")
+        				elif cmd == "protectcancel on":
+                            if msg._from in Admin:
+                                if to in settings["protectCancel"]["list"]:
+                                    client.sendMessage(to, "Protect Cancel Is Online")
+                                else:
+                                    settings["protectCancel"]["on"] = True
+                                    settings["protectCancel"]["list"].append(to)
+                                    client.sendMessage(to, "Protect Cancel Online")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    if to in settings["protectCancel"]["list"]:
+                                        client.sendMessage(to, "Protect Cancel Is Online")
+                                    else:
+                                        settings["protectCancel"]["on"] = True
+                                        settings["protectCancel"]["list"].append(to)
+                                        client.sendMessage(to, "Protect Cancel Online")
+                                else:
+                                    client.sendMessage(to, "You Are Not My Staff")
+        				elif cmd == "protectcancel off":
+                            if msg._from in Admin:
+                                if to not in settings["protectCancel"]["list"]:
+                                    client.sendMessage(to, "Protect Cancel Is Offline")
+                                else:
+                                    settings["protectCancel"]["on"] = False
+                                    settings["protectCancel"]["list"].remove(to)
+                                    client.sendMessage(to, "Protect Cancel Offline")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    if to not in settings["protectCancel"]["list"]:
+                                        client.sendMessage(to, "Protect Cancel Is OFfline")
+                                    else:
+                                    settings["protectCancel"]["on"] = False
+                                    settings["protectCancel"]["list"].remove(to)
+                                    client.sendMessage(to, "Protect Cancel Offline")
+                                else:
+                                    client.sendMessage(to, "You Are Not My Staff")
+        				elif cmd == "protectqr on":
+                            if msg._from in Admin:
+                                if to in settings["protectqr"]["list"]:
+                                    client.sendMessage(to, "Protect Qr Is Online")
+                                else:
+                                    settings["protectQr"]["on"] = True
+                                    settings["protectQr"]["list"].append(to)
+                                    client.sendMessage(to, "Protect Qr Online")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    if to in settings["protectqr"]["list"]:
+                                        client.sendMessage(to, "Protect Qr Is Online")
+                                    else:
+                                        settings["protectQr"]["on"] = True
+                                        settings["protectQr"]["list"].append(to)
+                                        client.sendMessage(to, "Protect Qr Online")
+                                else:
+                                    client.sendMessage(to, "You Are Not My Staff")
+        				elif cmd == "protectqr off":
+                            if msg._from in Admin:
+                                if to not in settings["protectQr"]["list"]:
+                                    client.sendMessage(to, "Protect Qr Is Offline")
+                                else:
+                                    settings["protectQr"]["on"] = False
+                                    settings["protectQr"]["list"].remove(to)
+                                    client.sendMessage(to, "Protect Qr Offline")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    if to not in settings["protectQr"]["list"]:
+                                        client.sendMessage(to, "Protect Qr Is Offline")
+                                    else:
+                                        settings["protectQr"]["on"] = False
+                                        settings["protectQr"]["list"].remove(to)
+                                        client.sendMessage(to, "Protect Qr Offline")
+                                else:
+                                    client.sendMessage(to, "You Are Not My Staff")
+        				elif cmd == "bot join":
+                            if msg._from in Admin:
+                                g = client.getGroup(to)
+                                g.preventedJoinByTicket = False
+                                client.updateGroup(g)
+                                Ticket = client.reissueGroupTicket(to)
+                                for join in dolphinJoin:
+                                    if join in g.members:
+                                        client.sendMessage(to, "Your Bot Already Join")
+                                    else:
+                                        join.acceptGroupInvitationByTicket(to, Ticket)
+                                        join.sendMessage(to, "Ready Protect Group")
+                                g.preventedJoinByTicket = True
+                                client.updateGroup(g)
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    g = client.getGroup(to)
+                                    g.preventedJoinByTicket = False
+                                    client.updateGroup(g)
+                                    Ticket = client.reissueGroupTicket(to)
+                                    for join in dolphinJoin:
+                                        if join in g.members:
+                                            client.sendMessage(to, "Your Bot Already Join")
+                                        else:
+                                            join.acceptGroupInvitationByTicket(to, Ticket)
+                                            join.sendMessage(to, "Ready Protect Group")
+                                    g.preventedJoinByTicket = True
+                                    client.updateGroup(g)
+        				elif cmd == "bot bye":
+                            if msg._from in Admin:
+                                g = client.getGroup(to)
+                                for bye in dolphinJoin:
+                                    if bye not in g.members:
+                                        client.sendMessage(to, "Your Bot Already Leave")
+                                    else:
+                                        bye.sendMessage(to, "Protect Is Finish")
+                                        bye.leaveGroup(to)
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                g = client.getGroup(to)
+                                for bye in dolphinJoin:
+                                    if bye not in g.members:
+                                        client.sendMessage(to, "Your Bot Already Leave")
+                                    else:
+                                        bye.sendMessage(to, "Protect Is Finish")
+                                        bye.leaveGroup(to)
+        				elif cmd == "clear blacklist":
+                            if msg._from in Admin:
+                                if to in settings["blacklist"]["list"]:
+                                    client.sendMessage(to, "Nothing Blacklist")
+                                else:
+                                    settings["blacklist"]["list"] = []
+                                    client.sendMessage(to, "Succes Clear All Blacklist")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    if to in settings["blacklist"]["list"]:
+                                        client.sendMessage(to, "Nothing Blacklist")
+                                    else:
+                                        settings["blacklist"]["list"] = []
+                                        client.sendMessage(to, "Succes Clear All Blacklist")
         				elif cmd.startswith("contact"):
         					if 'MENTION' in msg.contentMetadata.keys()!= None:
         						names = re.findall(r'@(\w+)', text)
@@ -676,122 +759,208 @@ def clientBot(op):
         										else:
         											settings["staff"]["list"].append(g.mid)
         											client.sendMessage(to, "Succes Add To Staff")
-        				elif cmd.startswith("staffdelete") and sender == Admin:
-        					if 'MENTION' in msg.contentMetadata.keys()!= None:
-        						names = re.findall(r'@(\w+)', text)
-        						mention = ast.literal_eval(msg.contentMetadata['MENTION'])
-        						mentionees = mention['MENTIONEES']
-        						lists = []
-        						for mention in mentionees:
-        							if mention["M"] not in lists:
-        								lists.append(mention["M"])
-        								for ls in lists:
-        									try:
-        										g = client.getContact(ls)
-        									except:
-        										continue
-        									if g.mid not in settings["staff"]["list"]:
-        										client.sendMessage(to, "Contact Succes Delete To Staff")
-        										continue
-        									if g.mid in settings["staff"]["list"]:
-        										settings["staff"]["list"].remove(g.mid)
-        										client.sendMessage(to, "Succes Delete To Staff")
-        				elif cmd.startswith("blacklistadd") and sender == settings["staff"]["list"] and sender == Admin:
-        					if 'MENTION' in msg.contentMetadata.keys()!= None:
-        						names = re.findall(r'@(\w+)', text)
-        						mention = ast.literal_eval(msg.contentMetadata['MENTION'])
-        						mentionees = mention['MENTIONEES']
-        						lists = []
-        						for mention in mentionees:
-        							if mention["M"] not in lists:
-        								lists.append(mention["M"])
-        								for ls in lists:
-        									try:
-        										g = client.getContact(ls)
-        									except:
-        										continue
-        									if g.mid in settings["blacklist"]["list"]:
-        										client.sendMessage(to, "Contact Succes Add To Blacklist")
-        										continue
-        									if g.mid not in settings["blacklist"]["list"]:
-        										settings["blacklist"]["list"].append(g.mid)
-        										client.sendMessage(to, "Succes Add To Blacklist")
-        				elif cmd.startswith("blacklistdelete") and sender == settings["staff"]["list"] and sender == Admin:
-        					if 'MENTION' in msg.contentMetadata.keys()!= None:
-        						names = re.findall(r'@(\w+)', text)
-        						mention = ast.literal_eval(msg.contentMetadata['MENTION'])
-        						mentionees = mention['MENTIONEES']
-        						lists = []
-        						for mention in mentionees:
-        							if mention["M"] not in lists:
-        								lists.append(mention["M"])
-        								for ls in lists:
-        									try:
-        										g = client.getContact(ls)
-        									except:
-        										continue
-        									if g.mid not in settings["blacklist"]["list"]:
-        										client.sendMessage(to, "Contact Succes Delete To Blacklist")
-        										continue
-        									if g.mid in settings["blacklist"]["list"]:
-        										settings["blacklist"]["list"].remove(g.mid)
-        										client.sendMessage(to, "Succes Delete To Blacklist")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+        				elif cmd.startswith("staffdelete"):
+                            if msg._from in Admin:
+                                if 'MENTION' in msg.contentMetadata.keys()!= None:
+                                    names = re.findall(r'@(\w+)', text)
+                                    mention = ast.literal_eval(msg.contentMetadata['MENTION'])
+                                    mentionees = mention['MENTIONEES']
+                                    lists = []
+                                    for mention in mentionees:
+                                        if mention["M"] not in lists:
+                                            lists.append(mention["M"])
+                                            for ls in lists:
+                                                g = client.getContact(ls)
+                                                if g.mid not in settings["staff"]["list"]:
+                                                    client.sendMessage(to, "Contact Succes Delete To Staff")
+                                                else:
+                                                    settings["staff"]["list"].remove(g.mid)
+                                                    client.sendMessage(to, "Succes Delete To Staff")
+        				elif cmd.startswith("blacklistadd"):
+                            if msg._from in Admin:
+                                if 'MENTION' in msg.contentMetadata.keys()!= None:
+                                    names = re.findall(r'@(\w+)', text)
+                                    mention = ast.literal_eval(msg.contentMetadata['MENTION'])
+                                    mentionees = mention['MENTIONEES']
+                                    lists = []
+                                    for mention in mentionees:
+                                        if mention["M"] not in lists:
+                                            lists.append(mention["M"])
+                                            for ls in lists:
+                                                g = client.getContact(ls)
+                                                if g.mid in settings["blacklist"]["list"]:
+                                                    client.sendMessage(to, "Contact Succes Add To Blacklist")
+                                                else:
+                                                    settings["blacklist"]["list"].append(g.mid)
+                                                    client.sendMessage(to, "Succes Add To Blacklist")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    if 'MENTION' in msg.contentMetadata.keys()!= None:
+                                        names = re.findall(r'@(\w+)', text)
+                                        mention = ast.literal_eval(msg.contentMetadata['MENTION'])
+                                        mentionees = mention['MENTIONEES']
+                                        lists = []
+                                        for mention in mentionees:
+                                            if mention["M"] not in lists:
+                                                lists.append(mention["M"])
+                                                for ls in lists:
+                                                    g = client.getContact(ls)
+                                                    if g.mid in settings["blacklist"]["list"]:
+                                                        client.sendMessage(to, "Contact Succes Add To Blacklist")
+                                                    else:
+                                                        settings["blacklist"]["list"].append(g.mid)
+                                                        client.sendMessage(to, "Succes Add To Blacklist")
+                                else:
+                                    client.sendMessage(to, "You Are Not My Staff")
+        				elif cmd.startswith("blacklistdelete"):
+                            if msg._from in Admin:
+                                if 'MENTION' in msg.contentMetadata.keys()!= None:
+                                    names = re.findall(r'@(\w+)', text)
+                                    mention = ast.literal_eval(msg.contentMetadata['MENTION'])
+                                    mentionees = mention['MENTIONEES']
+                                    lists = []
+                                    for mention in mentionees:
+                                        if mention["M"] not in lists:
+                                            lists.append(mention["M"])
+                                            for ls in lists:
+                                                g = client.getContact(ls)
+                                                if g.mid not in settings["blacklist"]["list"]:
+                                                    client.sendMessage(to, "Contact Succes Delete To Blacklist")
+                                                else:
+                                                    settings["blacklist"]["list"].remove(g.mid)
+                                                    client.sendMessage(to, "Succes Delete To Blacklist")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    if 'MENTION' in msg.contentMetadata.keys()!= None:
+                                        names = re.findall(r'@(\w+)', text)
+                                        mention = ast.literal_eval(msg.contentMetadata['MENTION'])
+                                        mentionees = mention['MENTIONEES']
+                                        lists = []
+                                        for mention in mentionees:
+                                            if mention["M"] not in lists:
+                                                lists.append(mention["M"])
+                                                for ls in lists:
+                                                    g = client.getContact(ls)
+                                                    if g.mid not in settings["blacklist"]["list"]:
+                                                        client.sendMessage(to, "Contact Succes Delete To Blacklist")
+                                                    else:
+                                                        settings["blacklist"]["list"].remove(g.mid)
+                                                        client.sendMessage(to, "Succes Delete To Blacklist")
         				elif cmd == "staff add":
         					if msg._from in Admin:
         						settings["staff"]["add"] = True
         						client.sendMessage(to, "Please Send Contact If You Want Add To Staff")
         					else:
         						client.sendMessage(to, "You Are Not My Admin")
-        				elif cmd == "staff delete" and sender == Admin:
-        					settings["staff"]["delete"] = True
-        					client.sendMessage(to, "Please Send Contact If You Want Delete To Staff")
-        				elif cmd == "blacklist add" and sender == settings["staff"]["list"] and sender == Admin:
-        					settings["blacklist"]["add"] = True
-        					client.sendMessage(to, "Please Send Contact If You Want Add To Blacklist")
-        				elif cmd == "blacklist delete" and sender == settings["staff"]["list"] and sender == Admin:
-        					settings["blacklist"]["delete"] = True
-        					client.sendMessage(to, "Please Send Contact If You Want Delete To Blacklist")
+        				elif cmd == "staff delete":
+                            if msg._from in Admin:
+                                settings["staff"]["delete"] = True
+                                client.sendMessage(to, "Please Send Contact If You Want Delete To Staff")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+        				elif cmd == "blacklist add":
+                            if msg._from in Admin:
+                                settings["blacklist"]["add"] = True
+                                client.sendMessage(to, "Please Send Contact If You Want Add To Blacklist")
+                            else:
+                                client.sendMessage(to, "You Are Not My Admin")
+                                if msg._from in settings["staff"]["list"]:
+                                    settings["blacklist"]["add"] = True
+                                    client.sendMessage(to, "Please Send Contact If You Want Add To Blacklist")
+                                else:
+                                    client.sendMessage(to, "You Are Not My Staff")
+                                    if msg._from in settings["staff"]["list"]:
+                                        settings["blacklist"]["add"] = True
+                                        client.sendMessage(to, "Please Send Contact If You Want Add To Blacklist")
+                                    else:
+                                        client.sendMessage(to, "You Are Not My Staff")
+        				elif cmd == "blacklist delete":
+                            if msg._from in Admin:
+                                settings["blacklist"]["delete"] = True
+                                client.sendMessage(to, "Please Send Contact If You Want Delete To Blacklist")
+                            else:
+                                client.sendMessage(to, "You Are Not My Staff")
+                                if msg._from in settings["staff"]["list"]:
+                                    settings["blacklist"]["delete"] = True
+                                    client.sendMessage(to, "Please Send Contact If You Want Delete To Blacklist")
+                                else:
+                                    client.sendMessage(to, "You Are Not My Staff")
         		elif msg.contentType == 13:
         			if settings["staff"]["add"] == True:
-        				if msg.contentMetadata["mid"] not in settings["staff"]["list"]:
-        					mid = msg.contentMetadata["mid"]
-        					settings["staff"]["list"].append(mid)
-        					client.sendMessage(to, "Succes Add To Staff")
-        					settings["staff"]["add"] = False
-        				else:
-        					if msg.contentMetadata["mid"] in settings["staff"]["list"]:
-        						client.sendMessage(to, "Contact Succes Add To Staff")
-        						settings["staff"]["add"] = False
+                        if msg._from in Admin:
+                            if msg.contentMetadata["mid"] not in settings["staff"]["list"]:
+                                mid = msg.contentMetadata["mid"]
+                                settings["staff"]["list"].append(mid)
+                                client.sendMessage(to, "Succes Add To Staff")
+                                settings["staff"]["add"] = False
+                            else:
+                                if msg.contentMetadata["mid"] in settings["staff"]["list"]:
+                                    client.sendMessage(to, "Contact Succes Add To Staff")
+                                    settings["staff"]["add"] = False
+                        else:
+                            client.sendMessage(to, "You Are Not My Admin")
         			if settings["staff"]["delete"] == True:
-        				if msg.contentMetadata["mid"] in settings["staff"]["list"]:
-        					mid = msg.contentMetadata["mid"]
-        					settings["staff"]["list"].remove(mid)
-        					client.sendMessage(to, "Succes Delete To Staff")
-        					settings["staff"]["delete"] = False
-        				else:
-        					if msg.contentMetadata["mid"] not in settings["staff"]["list"]:
-        						client.sendMessage(to, "Contact Succes Delete To Staff")
-        						settings["staff"]["delete"] = False
+                        if msg._from in Admin:
+                            if msg.contentMetadata["mid"] in settings["staff"]["list"]:
+                                mid = msg.contentMetadata["mid"]
+                                settings["staff"]["list"].remove(mid)
+                                client.sendMessage(to, "Succes Delete To Staff")
+                                settings["staff"]["delete"] = False
+                            else:
+                                if msg.contentMetadata["mid"] not in settings["staff"]["list"]:
+                                    client.sendMessage(to, "Contact Succes Delete To Staff")
+                                    settings["staff"]["delete"] = False
+                        else:
+                            client.sendMessage(to, "You Are Not My Admin")
         			if settings["blacklist"]["add"] == True:
-        				if msg.contentMetadata["mid"] not in settings["blacklist"]["list"]:
-        					mid = msg.contentMetadata["mid"]
-        					settings["blacklist"]["list"].append(mid)
-        					client.sendMessage(to, "Succes Add To Blacklist")
-        					settings["blacklist"]["add"] = False
-        				else:
-        					if msg.contentMetadata["mid"] in settings["blacklist"]["list"]:
-        						client.sendMessage(to, "Contact Succes Add To Blacklist")
-        						settings["blacklist"]["add"] = False
+                        if msg._from in Admin:
+                            if msg.contentMetadata["mid"] not in settings["blacklist"]["list"]:
+                                mid = msg.contentMetadata["mid"]
+                                settings["blacklist"]["list"].append(mid)
+                                client.sendMessage(to, "Succes Add To Blacklist")
+                                settings["blacklist"]["add"] = False
+                            else:
+                                if msg.contentMetadata["mid"] in settings["blacklist"]["list"]:
+                                client.sendMessage(to, "Contact Succes Add To Blacklist")
+                                settings["blacklist"]["add"] = False
+                        else:
+                            client.sendMessage(to, "You Are Not My Admin")
+                            if msg._from in settings["staff"]["list"]:
+                                if msg.contentMetadata["mid"] not in settings["blacklist"]["list"]:
+                                    mid = msg.contentMetadata["mid"]
+                                    settings["blacklist"]["list"].append(mid)
+                                    client.sendMessage(to, "Succes Add To Blacklist")
+                                    settings["blacklist"]["add"] = False
+                            client.sendMessage(to, "You Are Not My Staff")
         			if settings["blacklist"]["delete"] == True:
-        				if msg.contentMetadata["mid"] in settings["blacklist"]["list"]:
-        					mid = msg.contentMetadata["mid"]
-        					settings["blacklist"]["list"].remove(mid)
-        					clientsendMessage(to, "Succes Delete To Blacklist")
-        					settings["blacklist"]["delete"] = False
-        				else:
-        					if msg.contentMetadata["mid"] not in settings["blacklist"]["list"]:
-        						client.sendMessage(to, "Contact Succes Delete To Blacklist")
-        						settings["blacklist"]["delete"] = False
+                        if msg._from in Admin:
+                            if msg.contentMetadata["mid"] in settings["blacklist"]["list"]:
+                                mid = msg.contentMetadata["mid"]
+                                settings["blacklist"]["list"].remove(mid)
+                                client.sendMessage(to, "Succes Delete To Blacklist")
+                                settings["blacklist"]["delete"] = False
+                            else:
+                                if msg.contentMetadata["mid"] not in settings["blacklist"]["list"]:
+                                client.sendMessage(to, "Contact Succes Delete To Blacklist")
+                                settings["blacklist"]["delete"] = False
+                        else:
+                            client.sendMessage(to, "You Are Not My Admin")
+                            if msg._from in settings["staff"]["list"]:
+                                if msg.contentMetadata["mid"] in settings["blacklist"]["list"]:
+                                    mid = msg.contentMetadata["mid"]
+                                    settings["blacklist"]["list"].remove(mid)
+                                    client.sendMessage(to, "Succes Delete To Blacklist")
+                                    settings["blacklist"]["delete"] = False
+                                else:
+                                    if msg.contentMetadata["mid"] not in settings["blacklist"]["list"]:
+                                        client.sendMessage(to, "Contact Succes Delete To Blacklist")
+                                        settings["blacklist"]["delete"] = False
+                            else:
+                                client.sendMessage(to, "You Are Not My Staff")
     except Exception as error:
     	print(error)
 
