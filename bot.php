@@ -38,31 +38,31 @@ if (count($pesan_datang) > 2) {
 
 #-------------------------[Function]-------------------------#
 function shalat($keyword) {
-    $uri = "https://time.siswadi.com/pray/" . $keyword;
+    $apikey = "YOUR-APIKEY";	
+    $uri = "https://rest.farzain.com/api/shalat.php?id=bandung&apikey=" . $keyword;
 
     $response = Unirest\Request::get("$uri");
 
     $json = json_decode($response->raw_body, true);
     $result = "Jadwal Shalat Sekitar ";
-	$result .= $json['location']['address'];
-	$result .= "\nTanggal : ";
-	$result .= $json['time']['date'];
+	$result .= $keyword;
 	$result .= "\n\nShubuh : ";
-	$result .= $json['data']['Fajr'];
+	$result .= $json['respon']['shubuh'];
 	$result .= "\nDzuhur : ";
-	$result .= $json['data']['Dhuhr'];
+	$result .= $json['respon']['dzuhur'];
 	$result .= "\nAshar : ";
-	$result .= $json['data']['Asr'];
+	$result .= $json['respon']['ashar'];
 	$result .= "\nMaghrib : ";
-	$result .= $json['data']['Maghrib'];
+	$result .= $json['respon']['maghrib'];
 	$result .= "\nIsya : ";
-	$result .= $json['data']['Isha'];
+	$result .= $json['respon']['isya'];
     return $result;
 }
 
 #-------------------------[Function]-------------------------#
 function cuaca($keyword) {
-    $uri = "http://api.openweathermap.org/data/2.5/weather?q=" . $keyword . ",ID&units=metric&appid=e172c2f3a3c620591582ab5242e0e6c4";
+    $apikey = "e172c2f3a3c620591582ab5242e0e6c4";
+    $uri = "http://api.openweathermap.org/data/2.5/weather?q=" . $keyword . ",ID&units=metric&appid=" . $apikey;
     $response = Unirest\Request::get("$uri");
     $json = json_decode($response->raw_body, true);
     $result = "Halo Kak ^_^ Ini ada Ramalan Cuaca Untuk Daerah ";
